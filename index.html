@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="A Napfényliget Kórház képzeletbeli menzájának nyitvatartása, étkezési időpontjai és heti ajánlata.">
+  <title>Napfényliget Kórház | Menzainfo</title>
+  <style>
+    :root {
+      --navy: #15366f;
+      --blue: #1676d2;
+      --teal: #0ca6a6;
+      --coral: #ff6374;
+      --yellow: #ffd166;
+      --green: #4caf50;
+      --purple: #8655e8;
+      --ink: #23324d;
+      --muted: #5e6b80;
+      --paper: #ffffff;
+      --pale: #f2f8ff;
+      --shadow: 0 12px 30px rgba(21, 54, 111, .10);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: "Trebuchet MS", Arial, sans-serif;
+      color: var(--ink);
+      background: linear-gradient(135deg, #f5fbff 0%, #fff9f1 55%, #f5f3ff 100%);
+      line-height: 1.55;
+    }
+    a { color: inherit; }
+    .topbar {
+      background: rgba(255,255,255,.94);
+      border-bottom: 1px solid #dce9f7;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(12px);
+    }
+    .nav {
+      max-width: 1180px;
+      margin: auto;
+      padding: 12px 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--navy);
+      text-decoration: none;
+      font-weight: 900;
+      font-size: 1.18rem;
+      line-height: 1.1;
+    }
+    .brand-icon {
+      display: grid;
+      place-items: center;
+      width: 48px;
+      height: 48px;
+      border-radius: 16px;
+      color: white;
+      font-size: 1.7rem;
+      background: linear-gradient(145deg, var(--blue), var(--teal));
+      box-shadow: 0 7px 16px #1676d233;
+    }
+    .navlinks { display: flex; gap: 8px; flex-wrap: wrap; }
+    .navlinks a {
+      text-decoration: none;
+      font-weight: 700;
+      padding: 9px 14px;
+      border-radius: 999px;
+      color: var(--navy);
+      transition: .2s ease;
+    }
+    .navlinks a:hover, .navlinks a:focus-visible {
+      color: white;
+      background: var(--blue);
+      outline: none;
+    }
+    .hero {
+      overflow: hidden;
+      position: relative;
+      background: linear-gradient(115deg, #dff4ff, #fff 50%, #fff0d6);
+      border-bottom: 1px solid #e1edf8;
+    }
+    .hero-inner {
+      max-width: 1180px;
+      min-height: 300px;
+      margin: auto;
+      padding: 48px 22px 44px;
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      align-items: center;
+      gap: 26px;
+    }
+    .eyebrow {
+      display: inline-block;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: #ffffffc9;
+      color: #087d91;
+      font-weight: 800;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      font-size: .78rem;
+      border: 1px solid #b9e8ef;
+    }
+    h1 {
+      color: var(--navy);
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      line-height: .98;
+      margin: 17px 0;
+      letter-spacing: -.045em;
+    }
+    h1 span { color: var(--teal); }
+    .hero p { font-size: 1.15rem; max-width: 600px; color: #43516a; }
+    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 24px; }
+    .btn {
+      display: inline-block;
+      padding: 12px 18px;
+      border-radius: 14px;
+      text-decoration: none;
+      font-weight: 800;
+      box-shadow: 0 7px 16px #15366f1a;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .btn:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
+    .btn-primary { color: white; background: linear-gradient(135deg, var(--blue), #3a9af0); }
+    .btn-light { color: var(--navy); background: white; border: 1px solid #d8e7f8; }
+    .hero-art {
+      min-height: 220px;
+      display: grid;
+      place-items: center;
+      position: relative;
+    }
+    .hero-plate {
+      width: min(100%, 430px);
+      aspect-ratio: 1.25;
+      border-radius: 46% 54% 45% 55% / 52% 42% 58% 48%;
+      background: #fff;
+      padding: 14px;
+      box-shadow: 0 22px 45px #15366f20;
+      transform: rotate(3deg);
+      position: relative;
+    }
+    .hero-plate img { width: 100%; height: 100%; object-fit: cover; border-radius: inherit; }
+    .sticker {
+      position: absolute;
+      right: -4px;
+      bottom: 4px;
+      background: var(--coral);
+      color: white;
+      border: 5px solid white;
+      border-radius: 50%;
+      width: 112px;
+      height: 112px;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      font-weight: 900;
+      line-height: 1.15;
+      transform: rotate(9deg);
+      box-shadow: var(--shadow);
+    }
+    main { max-width: 1180px; margin: auto; padding: 38px 22px 48px; }
+    .section-heading { margin-bottom: 20px; }
+    .section-heading h2 { color: var(--navy); font-size: clamp(1.8rem, 3vw, 2.5rem); margin: 0 0 5px; }
+    .section-heading p { color: var(--muted); margin: 0; }
+    .schedule-layout { display: grid; grid-template-columns: .95fr 1.05fr; gap: 22px; align-items: stretch; }
+    .hours-card {
+      padding: 27px;
+      border-radius: 24px;
+      background: white;
+      box-shadow: var(--shadow);
+      border: 1px solid #e0ecf9;
+    }
+    .hours-title { display: flex; align-items: center; gap: 13px; margin-bottom: 8px; }
+    .round-icon {
+      width: 52px; height: 52px; border-radius: 17px;
+      display: grid; place-items: center; color: white; font-size: 1.5rem; flex: 0 0 auto;
+    }
+    .hours-title h2 { margin: 0; color: var(--navy); font-size: 1.7rem; }
+    .hours-card > p { color: var(--muted); margin: 0 0 20px; }
+    .hours-row {
+      display: flex; justify-content: space-between; align-items: center; gap: 12px;
+      padding: 14px 16px; margin-top: 9px; border-radius: 13px; font-weight: 800;
+    }
+    .hours-row strong { white-space: nowrap; }
+    .row-blue { background: #e8f3ff; }
+    .row-yellow { background: #fff4d7; }
+    .row-pink { background: #ffe9ed; }
+    .note { margin-top: 17px; padding: 12px 14px; border-left: 4px solid var(--yellow); background: #fffaf0; border-radius: 8px; font-size: .91rem; }
+    .meals { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
+    .meal-card {
+      overflow: hidden; border-radius: 22px; background: white;
+      box-shadow: var(--shadow); border: 1px solid #e7edf5; transition: transform .2s;
+    }
+    .meal-card:hover { transform: translateY(-5px); }
+    .meal-card img { width: 100%; height: 155px; object-fit: cover; display: block; }
+    .meal-content { padding: 17px; }
+    .meal-label { display: flex; align-items: center; gap: 10px; margin-bottom: 7px; }
+    .meal-label .round-icon { width: 42px; height: 42px; border-radius: 14px; font-size: 1.2rem; }
+    .meal-label h3 { margin: 0; color: var(--navy); font-size: 1.18rem; }
+    .time { font-weight: 900; color: #087d91; margin: 0 0 8px; }
+    .meal-content p:last-child { margin: 0; color: var(--muted); font-size: .94rem; }
+    .info-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 25px; }
+    .info-card { border-radius: 20px; padding: 21px; display: flex; align-items: flex-start; gap: 14px; }
+    .info-card h3 { margin: 0 0 4px; color: var(--navy); }
+    .info-card p { margin: 0; color: #526178; font-size: .94rem; }
+    .info-green { background: #e7f8ed; }
+    .info-pink { background: #ffebef; }
+    .info-blue { background: #e6f4ff; }
+    .info-card .round-icon { width: 45px; height: 45px; border-radius: 15px; font-size: 1.3rem; }
+    .footer { background: var(--navy); color: white; }
+    .footer-inner { max-width: 1180px; margin: auto; padding: 28px 22px; display: flex; justify-content: space-between; gap: 22px; flex-wrap: wrap; align-items: center; }
+    .footer-brand { font-weight: 900; font-size: 1.2rem; }
+    .footer p { margin: 3px 0; color: #d9e8ff; }
+    .footer a { color: white; }
+    .footer-note { color: #bfe9ff; font-weight: 800; }
+    .tiny { font-size: .78rem; opacity: .78; }
+    @media (max-width: 900px) {
+      .nav { align-items: flex-start; flex-direction: column; }
+      .hero-inner { grid-template-columns: 1fr; padding-top: 35px; }
+      .hero-art { min-height: 240px; }
+      .schedule-layout { grid-template-columns: 1fr; }
+      .meals { gap: 12px; }
+      .meal-card img { height: 135px; }
+      .info-strip { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 600px) {
+      .navlinks { width: 100%; }
+      .navlinks a { padding: 7px 10px; font-size: .9rem; }
+      .hero-inner { padding: 30px 18px; }
+      main { padding: 28px 16px 35px; }
+      .meals { grid-template-columns: 1fr; }
+      .meal-card { display: grid; grid-template-columns: 120px 1fr; }
+      .meal-card img { height: 100%; min-height: 150px; }
+      .meal-content { padding: 13px; }
+      .hours-card { padding: 20px; }
+      .hours-row { padding: 12px; font-size: .92rem; }
+      .sticker { width: 88px; height: 88px; font-size: .85rem; }
+      .hero-plate { max-width: 340px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <nav class="nav" aria-label="Fő navigáció">
+      <a class="brand" href="#kezdo">
+        <span class="brand-icon" aria-hidden="true">✚</span>
+        <span>Napfényliget<br>Kórház</span>
+      </a>
+      <div class="navlinks">
+        <a href="#kezdo">Kezdőlap</a>
+        <a href="#etkezes">Étkezések</a>
+        <a href="#nyitvatartas">Nyitvatartás</a>
+        <a href="#info">Információk</a>
+      </div>
+    </nav>
+  </header>
+
+  <section class="hero" id="kezdo">
+    <div class="hero-inner">
+      <div>
+        <span class="eyebrow">Jóllakva könnyebb gyógyulni</span>
+        <h1>Kórházi <span>Menza</span></h1>
+        <p>Finom falatok, barátságos hangulat és egy kis extra energia a mindennapokhoz. Nálunk a kanál is a gyógyulás csapatában játszik!</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#nyitvatartas">🕒 Nyitvatartás</a>
+          <a class="btn btn-light" href="#etkezes">🍽️ Étkezések</a>
+        </div>
+      </div>
+      <div class="hero-art" aria-label="Friss, színes ebéd képe">
+        <div class="hero-plate">
+          <img src="kepek/nyitokep.jpg" alt="Színes, friss zöldségekből és egészséges alapanyagokból álló étel" loading="lazy">
+        </div>
+        <div class="sticker">Friss<br>ízélmény!<br>♥</div>
+      </div>
+    </div>
+  </section>
+
+  <main>
+    <section class="schedule-layout" id="nyitvatartas">
+      <div class="hours-card">
+        <div class="hours-title">
+          <span class="round-icon" style="background:var(--teal)" aria-hidden="true">◷</span>
+          <h2>Nyitvatartás</h2>
+        </div>
+        <p>A Napfényliget Kórház menzája az alábbi időpontokban várja a betegeket, dolgozókat és látogatókat.</p>
+        <div class="hours-row row-blue"><span>Hétfő – Péntek</span><strong>6:00 – 18:00</strong></div>
+        <div class="hours-row row-yellow"><span>Szombat</span><strong>7:00 – 15:00</strong></div>
+        <div class="hours-row row-pink"><span>Vasárnap</span><strong>7:00 – 15:00</strong></div>
+        <div class="note">ℹ️ <strong>Figyelem:</strong> ünnepnapokon a nyitvatartás változhat. Ez egy képzeletbeli kórház mintahonlapja.</div>
+      </div>
+
+      <div id="etkezes">
+        <div class="section-heading">
+          <h2>Mit eszünk ma?</h2>
+          <p>Három kedvenc napszak, három jó ok egy finom falatra.</p>
+        </div>
+        <div class="meals">
+          <article class="meal-card">
+            <img src="kepek/reggeli.jpg" alt="Tál friss zöldséges leves" loading="lazy">
+            <div class="meal-content">
+              <div class="meal-label">
+                <span class="round-icon" style="background:var(--coral)" aria-hidden="true">☕</span>
+                <h3>Reggeli</h3>
+              </div>
+              <p class="time">6:00 – 9:00</p>
+              <p>Friss péksütemények, zabkása, szendvicsek, kávé és tea.</p>
+            </div>
+          </article>
+          <article class="meal-card">
+            <img src="https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?auto=format&fit=crop&w=800&q=85" alt="Frissen készített, színes ebéd" loading="lazy">
+            <div class="meal-content">
+              <div class="meal-label">
+                <span class="round-icon" style="background:var(--green)" aria-hidden="true">🍴</span>
+                <h3>Ebéd</h3>
+              </div>
+              <p class="time">11:00 – 14:00</p>
+              <p>Naponta változó levesek, házias főételek és vegetáriánus választék.</p>
+            </div>
+          </article>
+          <article class="meal-card">
+            <img src="kepek/uzsonna.jpg" alt="Joghurt friss bogyós gyümölcsökkel" loading="lazy">
+            <div class="meal-content">
+              <div class="meal-label">
+                <span class="round-icon" style="background:var(--purple)" aria-hidden="true">✿</span>
+                <h3>Uzsonna</h3>
+              </div>
+              <p class="time">14:00 – 16:00</p>
+              <p>Könnyű falatok, gyümölcsök, joghurtok és desszertek.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="info-strip" id="info" aria-label="További információk">
+      <article class="info-card info-green">
+        <span class="round-icon" style="background:var(--green)" aria-hidden="true">✓</span>
+        <div><h3>Egészséges választék</h3><p>Friss alapanyagokból készülő, kiegyensúlyozott fogások minden nap.</p></div>
+      </article>
+      <article class="info-card info-pink">
+        <span class="round-icon" style="background:var(--coral)" aria-hidden="true">♥</span>
+        <div><h3>Speciális étrend</h3><p>Ételallergia vagy diéta esetén kérj tájékoztatást a személyzettől.</p></div>
+      </article>
+      <article class="info-card info-blue">
+        <span class="round-icon" style="background:var(--blue)" aria-hidden="true">☺</span>
+        <div><h3>Mindenkit várunk</h3><p>Betegek, hozzátartozók és kórházi dolgozók részére is nyitva állunk.</p></div>
+      </article>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div>
+        <div class="footer-brand">✚ Napfényliget Kórház</div>
+        <p>Jobb étel. Több erő.</p>
+      </div>
+      <div>
+        <p>📍 6000 Képzeletváros, Gyógyulás tér 1.</p>
+        <p>☎ +36 76 123 456 · ✉ menza@napfenyliget.example</p>
+      </div>
+      <div class="footer-note">Egészségesen, jókedvűen! ♥<p class="tiny">Tanulási célú, képzeletbeli honlap.</p></div>
+    </div>
+  </footer>
+</body>
+</html>
